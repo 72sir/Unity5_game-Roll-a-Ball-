@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
 
     private int count;
+    private bool pause = true;
     // Text fields
     public Text countText, winText;
 
@@ -22,12 +23,16 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        if (pause)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-        rb.AddForce(movement * speed);
+            rb.AddForce(movement * speed);
+        }
+
 	}
 
     void OnTriggerEnter(Collider other)
@@ -54,6 +59,7 @@ public class PlayerController : MonoBehaviour {
         if (count >= 4)
         {
             winText.text = "Вы выиграли!";
+            pause = false;
         }
 
     }
